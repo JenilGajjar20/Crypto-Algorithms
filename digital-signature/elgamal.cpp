@@ -1,6 +1,13 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+
+// finding the inverse
+#include "../partials/find_inv.cpp"
+
+// finding gcd
+#include "../partials/find_gcd.cpp"
+
 using namespace std;
 
 long long mod_exp(long long base, long long exp, long long mod)
@@ -68,44 +75,6 @@ void generate_keyPair(long long &q, long long &a, long long &xA, long long &yA)
     yA = mod_exp(a, xA, q);
 }
 
-long long findInv(long long a, long long m)
-{
-    long long m0 = m, q, t;
-    long long x0 = 0, x1 = 1;
-
-    if (m == 1)
-        return 0;
-
-    while (a > 1)
-    {
-        q = a / m;
-
-        t = m;
-
-        m = a % m;
-        a = t;
-
-        t = x0;
-
-        x0 = x1 - q * x0;
-
-        x1 = t;
-    }
-
-    if (x1 < 0)
-        x1 += m0;
-
-    return x1;
-}
-
-long long gcd(long long a, long long b)
-{
-    if (b == 0)
-        return a;
-
-    return gcd(b, a % b);
-}
-
 void signature(long long &q, long long &a, long long &xA, long long &m, long long &s1, long long &s2)
 {
     long long k;
@@ -140,7 +109,13 @@ int main()
     cin >> q;
     generate_keyPair(q, a, xA, yA);
 
-    long long m = 14;
+    long long m;
+    cout << "Enter message value: ";
+    cin >> m;
+
+    if (m <= 0 || m >= (q - 1))
+        m = m % q;
+
     cout << "Original message: " << m << endl;
 
     long long s1, s2;
