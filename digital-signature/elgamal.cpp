@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include <random>
+#include <chrono>
 
 // finding the inverse
 #include "../partials/find_inv.cpp"
@@ -104,19 +106,21 @@ bool verify(long long &q, long long &a, long long &yA, long long &m, long long &
 
 int main()
 {
+    auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
+    mt19937_64 generator(seed);
+
     long long q, a, xA, yA;
-    cout << "Enter q (value must be a large prime number): ";
-    cin >> q;
+    // cout << "Enter q (value must be a large prime number): ";
+    q = uniform_int_distribution<long long>(2, 1000)(generator);
+    cout << "Value of q: " << q << endl;
+    // cin >> q;
     generate_keyPair(q, a, xA, yA);
 
-    long long m;
-    cout << "Enter message value: ";
-    cin >> m;
+    long long m = rand() % (q - 1);
+    cout << "message value: " << m << endl;
 
     if (m <= 0 || m >= (q - 1))
         m = m % q;
-
-    cout << "Original message: " << m << endl;
 
     long long s1, s2;
     signature(q, a, xA, m, s1, s2);
