@@ -1,3 +1,5 @@
+// This function calculates the modular multiplicative inverse of a module m using the extended euclidean algorithm
+
 long long findInv(long long a, long long m)
 {
     long long m0 = m, q, t;
