@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// This function finds the minimum x such that x % num[i] is equal to rem[i] for all i
 long long findMinX(vector<long long> num, vector<long long> rem, long long size, long long prod)
 {
     long long ans = 0;
@@ -35,7 +36,7 @@ int main()
         cin >> num[i];
     }
 
-    // Calculating Product of three numbers
+    // Calculating Product of numbers
     for (long long i = 0; i < size; i++)
         prod *= num[i];
 
